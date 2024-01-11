@@ -1,0 +1,24 @@
+Begin
+c207-013.frontera.tacc.utexas.edu
+/scratch1/07502/tg868016/preprocess_inputs/scripts
+Tue Dec 26 20:19:26 CST 2023
+/scratch1/07502/tg868016/training_data/Output_N1360_L100_2/PART_000 with scale factor 0.076901 does not exist.
+/scratch1/07502/tg868016/training_data/Output_N1360_L100_2/PART_001 with scale factor 0.083684 does not exist.
+/scratch1/07502/tg868016/training_data/Output_N1360_L100_2/PART_002 with scale factor 0.090204 does not exist.
+/scratch1/07502/tg868016/training_data/Output_N1360_L100_2/PART_003 with scale factor 0.096497 does not exist.
+/scratch1/07502/tg868016/training_data/Output_N1360_L100_2/PART_004 with scale factor 0.102592 does not exist.
+/scratch1/07502/tg868016/training_data/Output_N1360_L100_2/PART_005 with scale factor 0.108513 does not exist.
+/scratch1/07502/tg868016/training_data/Output_N1360_L100_2/PART_006 with scale factor 0.108513 does not exist.
+/scratch1/07502/tg868016/training_data/Output_N1360_L100_2/PART_007 with scale factor 0.108513 does not exist.
+/scratch1/07502/tg868016/training_data/Output_N1360_L100_2/PART_008 with scale factor 0.114277 does not exist.
+/scratch1/07502/tg868016/training_data/Output_N1360_L100_2/PART_009 with scale factor 0.119901 does not exist.
+/scratch1/07502/tg868016/training_data/Output_N1360_L100_2/PART_010 with scale factor 0.125398 does not exist.
+/scratch1/07502/tg868016/training_data/Output_N1360_L100_2/PART_011 with scale factor 0.130778 does not exist.
+/scratch1/07502/tg868016/training_data/Output_N1360_L100_2/PART_012 with scale factor 0.136051 does not exist.
+Final in-path: /scratch1/07502/tg868016/training_data/Output_N1360_L100_2/PART_013, scale factor: 0.141226
+Final in-path: /scratch1/07502/tg868016/training_data/Output_N1360_L100_2/PART_014, scale factor: 0.146309
+Final in-path: /scratch1/07502/tg868016/training_data/Output_N1360_L100_2/PART_015, scale factor: 0.151307
+Final in-path: /scratch1/07502/tg868016/training_data/Output_N1360_L100_2/PART_016, scale factor: 0.156226
+Final in-path: /scratch1/07502/tg868016/training_data/Output_N1360_L100_2/PART_017, scale factor: 0.157
+End
+Tue Dec 26 20:49:56 CST 2023

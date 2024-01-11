@@ -1,0 +1,50 @@
+#!/bin/bash
+
+#SBATCH -J HR_preproc          # Job name
+#SBATCH -o outfiles/HR_preproc.o%j       # Name of stdout output file
+#SBATCH -e outfiles/HR_preproc.e%j       # Name of stderr error file
+#SBATCH -p nvdimm           # Queue (partition) name
+#SBATCH -N 1               # Total # of nodes (must be 1 for serial)
+#SBATCH -n 1               # Total # of mpi tasks (should be 1 for serial)
+#SBATCH -t 03:00:00        # Run time (hh:mm:ss)
+#SBATCH --mail-type=all    # Send email at begin and end of job
+#SBATCH -A AST20015       # Project/Allocation name (req'd if you have more than 1)
+#SBATCH --mail-user=bwils033@ucr.edu
+
+echo "Begin"
+hostname
+pwd
+date
+source activate nbodykit-env
+
+###inpath="~/scratch/dmo-100MPC/dmo-64/test-set0/output/PART_006"
+basepath="/scratch1/07502/tg868016/training_data/Output_N1360_L100_2"
+###inpath="${basepath}/PART_"
+outpath="${basepath}/preprocessed"
+snapshot_file="${basepath}/Snapshots.txt"
+Nchunks=8
+
+cd ../
+# Loop through the file
+while IFS= read -r line; do
+    # Assuming the columns are separated by a space, adjust if necessary
+    snapshot_number=$(echo "$line" | awk '{print $1}')
+    scale_factor=$(echo "$line" | awk '{print $2}')
+
+    # Process your data, replace this with your actual processing logic
+    inpath="${basepath}/PART_${snapshot_number}"
+    if test -e "${inpath}"; then
+        echo "Final in-path: ${inpath}, scale factor: $scale_factor" 
+        python preproc_chunks.py --inpath "$inpath" --outpath "$outpath" --Nchunks "$Nchunks" 
+    else
+        echo "${inpath} with scale factor $scale_factor does not exist."
+    fi
+done < "$snapshot_file"
+
+###python preproc_chunks.py --inpath "$inpath" --outpath "$outpath"
+cd scripts/ 
+
+conda deactivate
+echo "End"
+date
+
