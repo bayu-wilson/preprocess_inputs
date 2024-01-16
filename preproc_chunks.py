@@ -24,10 +24,10 @@ def pos2dis(pos, boxsize, Ng):
 
     return pos
 
-def get_nonlin_fields(inpath, outpath, Nchunks):
+def get_nonlin_fields(inpath, outpath):#, Nchunks):
     """
     inpath is LR simulation snapshot in bigfile format (from MP-Gadget)
-    outpath is numpy array in shape (Nc,Ng/8,Ng/8,Ng/8)
+    outpath is numpy array in shape (Nc,Ng/2,Ng/2,Ng/2)
     """
     bigf = File(inpath)
     header = bigf.open('Header')
@@ -65,8 +65,22 @@ def get_nonlin_fields(inpath, outpath, Nchunks):
     disp = cosmology.disnorm(dis,z=redshift)
     velocity = cosmology.velnorm(vel,z=redshift)
     #catnorm = np.copy(disp) ###np.concatenate([disp,velocity],axis=0)
-    Ncells_per_chunk = int(Ng/8)
-    for i in range(Nchunks-1):
+    #Ncells_per_chunk = int(Ng/2)
+    cell_index_chunk = [0,int(Ng/2),Ng]
+    for i in range(2):
+        for j in range(2):
+            for k in range(2): 
+                  disp_chunk = disp[:,cell_index_chunk[i]:cell_index_chunk[i+1],
+                                      cell_index_chunk[j]:cell_index_chunk[j+1],
+                                      cell_index_chunk[k]:cell_index_chunk[k+1]]
+                  velocity_chunk = velocity[:,cell_index_chunk[i]:cell_index_chunk[i+1],
+                                              cell_index_chunk[j]:cell_index_chunk[j+1],
+                                              cell_index_chunk[k]:cell_index_chunk[k+1]]
+                  chunk_tag = f"{i}{j}{k}"
+                  np.save(outpath+"/disp_a%.6f_chunk%s" % (scale_factor,chunk_tag),disp_chunk)
+                  np.save(outpath+"/vel_a%.6f_chunk%s" % (scale_factor,chunk_tag),velocity_chunk)
+"""
+	for i in range(Nchunks):
         chunk_idx = Ncells_per_chunk*i,Ncells_per_chunk*(i+1)
         disp_chunk = disp[:,chunk_idx[0]:chunk_idx[1],
 			    chunk_idx[0]:chunk_idx[1],
@@ -78,7 +92,7 @@ def get_nonlin_fields(inpath, outpath, Nchunks):
         np.save(outpath+"/vel_a%.6f_chunk%d" % (scale_factor,i),velocity_chunk)
         #np.save("disp_"+outpath,disp_chunk)
         #np.save("vel_"+outpath,velocity_chunk)
-
+"""
     
 #-------------------------------------------------------------------    
 if __name__ == '__main__':
@@ -86,11 +100,11 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='preprocess')
     parser.add_argument('--inpath',required=True,type=str,help='path of the input snapshot')
     parser.add_argument('--outpath',required=True,type=str,help='path of the output')
-    parser.add_argument('--Nchunks',required=True,type=int,help='number of chunks to split the data files')
+    #parser.add_argument('--Nchunks',required=True,type=int,help='number of chunks to split the data files')
     
     args = parser.parse_args()
-    
-    get_nonlin_fields(args.inpath, args.outpath, args.Nchunks)
+    get_nonlin_fields(args.inpath, args.outpath)
+    #get_nonlin_fields(args.inpath, args.outpath, args.Nchunks)
     
     
     

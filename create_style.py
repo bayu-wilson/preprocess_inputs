@@ -2,9 +2,32 @@ import numpy as np
 from nbodykit.source.catalog import BigFileCatalog
 import os
 import glob
+import argparse
 
+def make_style_file(basepath):
+    style_folder = basepath+"/style/"
+    if not os.path.exists(style_folder):
+        os.makedirs(style_folder)
+    snapshots = glob.glob(basepath+"/PART_*")
+    num_snapshots = len(snapshots)
+    for j in range(num_snapshots):
+        snapshot = snapshots[j]
+        print(f"Snapshot: {snapshot}")
+        f = BigFileCatalog(snapshot, header = 'Header', dataset = '1/')
+        a = np.array([f.attrs['Time']])
+        style_snapshot = style_folder+f"/a_{a[0][0]:.6f}.npy"
+        np.save(style_snapshot, a)
+    print(" ")
 
-basepath = "/scratch1/07502/tg868016/training_data/Output_N1360_L100_{}"
+if __name__ == '__main__':
+
+    parser = argparse.ArgumentParser(description='get styles')
+    parser.add_argument('--basepath',required=True,type=str,help='path to the sim')
+    args = parser.parse_args()
+    make_style_file(args.basepath)
+
+"""
+#basepath = "/scratch1/07502/tg868016/training_data/Output_N1360_L100_{}"
 #sim_pathlist=[basepath.format("1"),basepath.format("2")] #path to each simulation from which we are extracting styles (scale factor)
 sim_pathlist=[basepath.format("2")]
 snapshots_per_sim = [glob.glob(path_i+"/PART_*") for path_i in sim_pathlist] #path to each snapshot for each simulation
@@ -29,7 +52,7 @@ for i in range(num_sims):
 		#style_for_sim.append(a)
 	#style_list.append(style_for_sim)
 	print(" ")
-
+"""
 """
 
 # replace the path with your own path to the style data    
