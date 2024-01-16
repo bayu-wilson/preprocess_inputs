@@ -33,7 +33,6 @@ def get_nonlin_fields(inpath, outpath):#, Nchunks):
     header = bigf.open('Header')
     boxsize = header.attrs['BoxSize'][0]
     scale_factor = header.attrs['Time'][0]
-    #redshift = 1./header.attrs['Time'][0] - 1
     redshift = 1./scale_factor - 1
 
     Ng = header.attrs['TotNumPart'][1] ** (1/3)
